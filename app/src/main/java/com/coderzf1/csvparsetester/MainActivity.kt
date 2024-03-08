@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coderzf1.csvparsetester.ui.theme.CSVParseTesterTheme
+import java.math.BigDecimal
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -112,8 +113,10 @@ fun TransactionCard(transaction:Transaction){
                 maxLines = 1
             )
             Spacer(modifier = Modifier.height(16.dp))
+            val amt = transaction.amount?.let { BigDecimal.valueOf(it) }
+//            val amt: BigDecimal? = BigDecimal.valueOf(120/394.40)
             val formattedDate:String =transaction.processedDate?.let { Utils.formatDate(it) }.toString()
-            val formattedCurrency:String = transaction.amount?.let{Utils.formatCurrency(it)}.toString()
+            val formattedCurrency:String = amt?.let{Utils.formatCurrency(it)}.toString()
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
